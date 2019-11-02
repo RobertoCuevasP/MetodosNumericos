@@ -1,0 +1,52 @@
+/*Newton Raphson
+Autores:  Roberto Pablo Cuevas Pinto
+          Luciana Avelina Nuniez Linares
+
+Fecha: 11/10/2019
+
+El siguiente codigo es una implementacion del algoritmo
+de Newton Raphson.
+*/
+
+#include<math.h>
+#include<stdio.h>
+#include<stdlib.h>
+
+//////////////////////////////////////////////////////////////
+
+#define f(x) (pow(x,2) - 9.0) //Funcion
+#define xo 5.0 //Punto donde se inicia la busqueda del valor de x
+
+//////////////////////////////////////////////////////////////
+
+#define h 0.001
+#define n 100 //Numero de iteraciones, debe ser de tipo Int
+
+int main() {
+  double current, next, g;
+  current = xo;
+  g = (f((current+h)) - f((current-h)))/(2.0 * h); /*Calculo
+  de la derivada*/
+
+  for (int i = 1; i <= n; i++){
+    if(g == 0){ //Derivada es igual a 0
+      printf("Error. La derivada genera una indeterminación\n");
+      return 0;
+    } else {
+      next = current - (f(current)/g);
+      double equals = fabs(next - current);
+      /*Pregunta si los dos ultimos valores son iguales (o tienen
+          una diferencia minima)*/
+      if(equals < 0.001){
+        printf("La respuesta para x es %0.3f\n", next);
+        return 0;
+      } else {
+        current = next;
+        g = (f((current+h)) - f((current-h)))/(2.0 * h);
+
+      }
+    }
+  }
+  printf("No se encontró una solución en los números Reales.\n");
+  return 0;
+}
